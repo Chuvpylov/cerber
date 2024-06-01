@@ -76,7 +76,7 @@ Cerber
 ### Step 1: Clone the Repository
 
 ```sh
-git clone https://github.com/yourusername/cerber.git
+git clone https://github.com/chuvpylov/cerber.git
 cd cerber
 ```
 

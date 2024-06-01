@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive To-Do List</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        ul { list-style-type: none; padding: 0; }
+        li { padding: 8px; margin: 4px 0; background: #f9f9f9; border: 1px solid #ddd; }
+        li.completed { text-decoration: line-through; color: #888; }
+        .btn { padding: 4px 8px; margin-left: 8px; cursor: pointer; }
+        .btn-complete { background-color: green; color: white; }
+        .btn-delete { background-color: red; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Interactive To-Do List</h1>
+    <input type="text" id="new-task" placeholder="New task..." />
+    <button id="add-task">Add</button>
+    <ul id="task-list"></ul>
+
+    <script>
+        document.getElementById('add-task').addEventListener('click', function() {
+            var taskText = document.getElementById('new-task').value;
+            if (taskText) {
+                addTask(taskText);
+                document.getElementById('new-task').value = '';
+            }
+        });
+
+        function addTask(taskText) {
+            var taskList = document.getElementById('task-list');
+            var li = document.createElement('li');
+
+            li.innerHTML = taskText + '<button class="btn btn-complete">Complete</button><button class="btn btn-delete">Delete</button>';
+            taskList.appendChild(li);
+
+            li.querySelector('.btn-complete').addEventListener('click', function() {
+                li.classList.toggle('completed');
+            });
+
+            li.querySelector('.btn-delete').addEventListener('click', function() {
+                taskList.removeChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

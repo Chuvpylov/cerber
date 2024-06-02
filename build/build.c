@@ -72,10 +72,12 @@ void build_project() {
     char **header_files = list_files("../include", ".h", &header_count);
 
     char server_output_file[100] = "../bin/server";
+    char test_output_file[100] = "../bin/test_main";
     char raylib_output_file[100] = "../bin/raylib_app";
 
 #ifdef _WIN32
     strcat(server_output_file, ".exe");
+    strcat(test_output_file, ".exe");
     strcat(raylib_output_file, ".exe");
 #endif
 
@@ -83,7 +85,7 @@ void build_project() {
     int rebuild_raylib = 0;
 
     for (int i = 0; i < src_count; ++i) {
-        if (strstr(source_files[i], "main.c") || strstr(source_files[i], "controller.c") || strstr(source_files[i], "model.c") || strstr(source_files[i], "view.c")) {
+        if (strstr(source_files[i], "main.c") || strstr(source_files[i], "controller.c") || strstr(source_files[i], "model.c") || strstr(source_files[i], "view.c") || strstr(source_files[i], "log_manager.c")) {
             if (is_file_modified_after(source_files[i], server_output_file)) {
                 rebuild_server = 1;
                 break;
@@ -107,16 +109,19 @@ void build_project() {
         strcat(command, server_output_file);
 
         for (int i = 0; i < src_count; ++i) {
-            if (strstr(source_files[i], "main.c") || strstr(source_files[i], "controller.c") || strstr(source_files[i], "model.c") || strstr(source_files[i], "view.c")) {
-                strcat(command, " ");
-                strcat(command, source_files[i]);
+            if (strstr(source_files[i], "main.c") || strstr(source_files[i], "controller.c") || strstr(source_files[i], "model.c") || strstr(source_files[i], "view.c") || strstr(source_files[i], "log_manager.c")) {
+                // Exclude test_main.c from the main server build
+                if (strstr(source_files[i], "test_main.c") == NULL) {
+                    strcat(command, " ");
+                    strcat(command, source_files[i]);
+                }
             }
         }
 
 #ifdef _WIN32
-        strcat(command, " -lws2_32");
+        strcat(command, " -lws2_32 -lpthread");
 #else
-        // Add any necessary libraries for non-Windows builds
+        strcat(command, " -lpthread");
 #endif
 
         run_command(command);
@@ -146,6 +151,23 @@ void build_project() {
     } else {
         printf("No changes detected for the Raylib app. Skipping build.\n");
     }
+
+    // Build test executable
+    printf("Building test executable...\n");
+
+    char test_command[1024] = "gcc -I../include -o ";
+    strcat(test_command, test_output_file);
+    strcat(test_command, " ../test/test_main.c ../src/controller.c ../src/log_manager.c");
+
+#ifdef _WIN32
+    strcat(test_command, " -lws2_32 -lpthread");
+#else
+    strcat(test_command, " -lpthread");
+#endif
+
+    run_command(test_command);
+
+    printf("Test executable build completed.\n");
 
     free_file_list(source_files, src_count);
     free_file_list(header_files, header_count);

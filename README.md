@@ -20,24 +20,23 @@ The Cerber Project is a multi-functional server application written in C. It ser
 - Raylib (for graphical applications)
 - Windows OS or compatible Unix-based OS
 
-### Installing Dependencies on Windows
+### Installing Dependencies on Linux
 
-1. **GCC:** Install via MSYS2
-    - Download and install MSYS2 from [msys2.org](https://www.msys2.org/).
-    - Update package database and core system packages:
-      ```sh
-      pacman -Syu
-      ```
-    - Install GCC:
-      ```sh
-      pacman -S mingw-w64-x86_64-gcc
-      ```
+#### GCC
+```bash
+sudo apt update
+sudo apt install build-essential
+```
 
-2. **Java Development Kit (JDK):**
-    - Download and install the JDK from [Oracle](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) or [OpenJDK](https://openjdk.java.net/install/).
+#### Java Development Kit (JDK)
+```bash
+sudo apt install default-jdk
+```
 
-3. **Raylib:**
-    - Download Raylib from [raylib.com](https://www.raylib.com/) and follow the installation instructions.
+#### Raylib
+```bash
+sudo apt install libraylib-dev
+```
 
 ## Project Structure
 
@@ -45,15 +44,16 @@ The Cerber Project is a multi-functional server application written in C. It ser
 Cerber
 |-- bin
 |   |-- HelloWorld.class
-|   |-- server.exe
-|   |-- raylib_app.exe
+|   |-- server
+|   |-- raylib_app
 |
 |-- build
 |   |-- build.c
-|   |-- build.exe
+|   |-- build
 |
 |-- include
 |   |-- controller.h
+|   |-- log_manager.h
 |   |-- model.h
 |   |-- view.h
 |
@@ -69,32 +69,39 @@ Cerber
 |   |-- model.c
 |   |-- raylib_app.c
 |   |-- view.c
+|   |-- log_manager.c
+|
+|-- test
+|   |-- test_main.c
+|
+|-- .gitignore
+|-- README.md
 ```
 
 ## Setup Instructions
 
 ### Step 1: Clone the Repository
 
-```sh
+```bash
 git clone https://github.com/chuvpylov/cerber.git
 cd cerber
 ```
 
 ### Step 2: Build the Project
 
-Navigate to the `build` directory and compile the build script:
+Navigate to the build directory and compile the build script:
 
-```sh
+```bash
 cd build
 gcc -o build build.c
-./build.exe
+./build
 ```
 
 ### Step 3: Compile the Java Program
 
 Ensure the Java program is compiled and the class file is placed in the `bin` directory:
 
-```sh
+```bash
 javac -d ../bin ../src/HelloWorld.java
 ```
 
@@ -102,32 +109,35 @@ javac -d ../bin ../src/HelloWorld.java
 
 Run the server executable from the `bin` directory:
 
-```sh
-../bin/server.exe
+```bash
+../bin/server
 ```
 
 ## Accessing the Application
 
 Open a web browser and navigate to the following URLs:
 
-- **Home Page:** `http://localhost:8080`
-- **Java Program:** `http://localhost:8080/runjava`
-- **Raylib Application:** `http://localhost:8080/runraylib`
+- Home Page: `http://localhost:8080`
+- Java Program: `http://localhost:8080/runjava`
+- Raylib Application: `http://localhost:8080/runraylib`
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Missing Dependencies:**
-    - Ensure all dependencies are installed and properly configured.
+#### Missing Dependencies
 
-2. **Build Errors:**
-    - Verify the paths in the build script and the server code.
-    - Ensure the environment variables and paths are set correctly.
+Ensure all dependencies are installed and properly configured.
 
-3. **Server Not Starting:**
-    - Check for any error messages in the console.
-    - Ensure the required ports are not in use by other applications.
+#### Build Errors
+
+Verify the paths in the build script and the server code.
+Ensure the environment variables and paths are set correctly.
+
+#### Server Not Starting
+
+Check for any error messages in the console.
+Ensure the required ports are not in use by other applications.
 
 ## Contributing
 
@@ -135,4 +145,4 @@ We welcome contributions to enhance the Cerber Project. Please fork the reposito
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the LICENSE file for details.

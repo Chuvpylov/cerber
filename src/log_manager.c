@@ -1,4 +1,5 @@
 #include "log_manager.h"
+#include <string.h> // Add this include
 
 static FILE *log_file = NULL;
 static pthread_mutex_t log_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -32,7 +33,11 @@ void log_message(LogLevel level, const char *message, const char *file, int line
     time_t now;
     time(&now);
     char timestamp[26];
+#ifdef _WIN32
     ctime_s(timestamp, sizeof(timestamp), &now);
+#else
+    strncpy(timestamp, ctime(&now), sizeof(timestamp));
+#endif
     timestamp[strlen(timestamp) - 1] = '\0'; // Remove newline
 
     const char *level_str;
@@ -71,7 +76,11 @@ void log_client_info(LogLevel level, const char *message, const char *file, int 
     time_t now;
     time(&now);
     char timestamp[26];
+#ifdef _WIN32
     ctime_s(timestamp, sizeof(timestamp), &now);
+#else
+    strncpy(timestamp, ctime(&now), sizeof(timestamp));
+#endif
     timestamp[strlen(timestamp) - 1] = '\0'; // Remove newline
 
     const char *level_str;
@@ -110,7 +119,11 @@ void log_client_request(LogLevel level, int client_socket, const char *request, 
     time_t now;
     time(&now);
     char timestamp[26];
+#ifdef _WIN32
     ctime_s(timestamp, sizeof(timestamp), &now);
+#else
+    strncpy(timestamp, ctime(&now), sizeof(timestamp));
+#endif
     timestamp[strlen(timestamp) - 1] = '\0'; // Remove newline
 
     const char *level_str;

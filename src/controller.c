@@ -3,12 +3,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <winsock2.h>
 
 #ifdef _WIN32
+    #include <winsock2.h>
+    #include <windows.h>
     #define PATH_SEP "\\"
+    #define popen _popen
+    #define pclose _pclose
+    #define CLOSESOCKET closesocket
 #else
+    #include <unistd.h>
+    #include <arpa/inet.h>
     #define PATH_SEP "/"
+    #define popen popen
+    #define pclose pclose
+    #define CLOSESOCKET close
 #endif
 
 #define LOG(level, message) log_message(level, message, __FILE__, __LINE__)
@@ -65,7 +74,7 @@ void handle_cgi(int client_socket, const char *program) {
     char buffer[1024];
     snprintf(buffer, sizeof(buffer), "java -cp ../bin %s", program);
 
-    FILE *fp = _popen(buffer, "r");
+    FILE *fp = popen(buffer, "r");
     if (fp == NULL) {
         LOG(LOG_ERROR, "Failed to run Java program.");
         perror("Failed to run Java program");
@@ -82,7 +91,7 @@ void handle_cgi(int client_socket, const char *program) {
     char output[4096];
     size_t output_size = fread(output, 1, sizeof(output) - 1, fp);
     output[output_size] = '\0';
-    _pclose(fp);
+    pclose(fp);
 
     char response_header[256];
     snprintf(response_header, sizeof(response_header),
@@ -104,7 +113,7 @@ void handle_raylib(int client_socket) {
     strcat(buffer, ".exe");
 #endif
 
-    FILE *fp = _popen(buffer, "r");
+    FILE *fp = popen(buffer, "r");
     if (fp == NULL) {
         LOG(LOG_ERROR, "Failed to run Raylib application.");
         perror("Failed to run Raylib application");
@@ -121,7 +130,7 @@ void handle_raylib(int client_socket) {
     char output[4096];
     size_t output_size = fread(output, 1, sizeof(output) - 1, fp);
     output[output_size] = '\0';
-    _pclose(fp);
+    pclose(fp);
 
     char response_header[256];
     snprintf(response_header, sizeof(response_header),
@@ -140,11 +149,11 @@ void handle_client(int client_socket) {
     int valread = recv(client_socket, buffer, 1024, 0);
     if (valread < 0) {
         LOG(LOG_ERROR, "Error reading from client socket.");
-        closesocket(client_socket);
+        CLOSESOCKET(client_socket);
         return;
     } else if (valread == 0) {
         LOG(LOG_WARNING, "Client closed the connection.");
-        closesocket(client_socket);
+        CLOSESOCKET(client_socket);
         return;
     }
 
@@ -171,6 +180,6 @@ void handle_client(int client_socket) {
             "404 Not Found";
         send(client_socket, response, strlen(response), 0);
     }
-    closesocket(client_socket);
+    CLOSESOCKET(client_socket);
     LOG(LOG_INFO, "Client connection closed.");
 }

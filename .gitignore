@@ -1,0 +1,55 @@
+# Compiled object files
+*.o
+
+# Compiled dynamic libraries
+*.so
+
+# Compiled static libraries
+*.a
+
+# Executable files
+*.exe
+*.out
+*.app
+*.dll
+*.dylib
+
+# Debug files
+*.dSYM/
+*.dSYM/*
+
+# Build directories
+/build/
+bin/
+obj/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+*.idea/
+.vscode/
+*.iml
+
+# Backup files
+*~
+*.bak
+*.old
+
+# Compiled Java files
+*.class
+
+# Generated files
+*.generated
+
+# Ignore specific directories and files
+src/HelloWorld.class

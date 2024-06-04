@@ -307,3 +307,94 @@ Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7
 [Tue Jun  4 01:12:04 2024] [WARNING] [../src/controller.c:155]: Client closed the connection.
 [Tue Jun  4 01:12:04 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 58767
 [Tue Jun  4 01:12:04 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 18171
+[Tue Jun  4 01:22:19 2024] [INFO] [../src/main.c:33]: Server starting...
+[Tue Jun  4 01:22:19 2024] [INFO] [../src/main.c:59]: Socket created successfully.
+[Tue Jun  4 01:22:19 2024] [INFO] [../src/main.c:75]: Bind successful.
+[Tue Jun  4 01:22:19 2024] [INFO] [../src/main.c:87]: Listening on port 8080.
+[Tue Jun  4 01:22:22 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 35026
+[Tue Jun  4 01:22:22 2024] [INFO] [../src/controller.c:161]: Client IP: 172.56.34.211, Port: 35026, Request:
+GET / HTTP/1.1
+Host: 212.227.239.235:8080
+Connection: keep-alive
+Cache-Control: max-age=0
+DNT: 1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7
+
+
+[Tue Jun  4 01:22:22 2024] [INFO] [../src/controller.c:70]: File sent successfully.
+[Tue Jun  4 01:22:22 2024] [INFO] [../src/controller.c:184]: Client connection closed.
+[Tue Jun  4 01:22:22 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 35026
+[Tue Jun  4 01:22:22 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 35131
+[Tue Jun  4 01:23:22 2024] [WARNING] [../src/controller.c:155]: Client closed the connection.
+[Tue Jun  4 01:23:22 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 35131
+[Tue Jun  4 01:23:22 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 4870
+[Tue Jun  4 01:23:28 2024] [WARNING] [../src/controller.c:155]: Client closed the connection.
+[Tue Jun  4 01:23:28 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 4870
+[Tue Jun  4 01:23:28 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 25108
+[Tue Jun  4 01:24:55 2024] [WARNING] [../src/controller.c:155]: Client closed the connection.
+[Tue Jun  4 01:24:55 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 25108
+[Tue Jun  4 01:24:55 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 52091
+[Tue Jun  4 01:24:55 2024] [INFO] [../src/controller.c:161]: Client IP: 172.56.34.211, Port: 52091, Request:
+GET / HTTP/1.1
+Host: 212.227.239.235:8080
+Connection: keep-alive
+Cache-Control: max-age=0
+DNT: 1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7
+
+
+[Tue Jun  4 01:24:55 2024] [INFO] [../src/controller.c:70]: File sent successfully.
+[Tue Jun  4 01:24:55 2024] [INFO] [../src/controller.c:184]: Client connection closed.
+[Tue Jun  4 01:24:55 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 52091
+[Tue Jun  4 01:24:55 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 11285
+[Tue Jun  4 01:25:02 2024] [INFO] [../src/controller.c:161]: Client IP: 172.56.34.211, Port: 11285, Request:
+GET /s/dashboard HTTP/1.1
+Host: 212.227.239.235:8080
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+DNT: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: http://212.227.239.235:8080/
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7
+
+
+[Tue Jun  4 01:25:02 2024] [WARNING] [../src/controller.c:174]: Unknown request.
+[Tue Jun  4 01:25:02 2024] [INFO] [../src/controller.c:184]: Client connection closed.
+[Tue Jun  4 01:25:02 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 11285
+[Tue Jun  4 01:25:02 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 28564
+[Tue Jun  4 01:25:05 2024] [INFO] [../src/controller.c:161]: Client IP: 172.56.34.211, Port: 28564, Request:
+GET /figure-out HTTP/1.1
+Host: 212.227.239.235:8080
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+DNT: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: http://212.227.239.235:8080/
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7
+
+
+[Tue Jun  4 01:25:05 2024] [WARNING] [../src/controller.c:174]: Unknown request.
+[Tue Jun  4 01:25:05 2024] [INFO] [../src/controller.c:184]: Client connection closed.
+[Tue Jun  4 01:25:05 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 28564
+[Tue Jun  4 01:25:05 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 11765
+[Tue Jun  4 01:26:07 2024] [WARNING] [../src/controller.c:155]: Client closed the connection.
+[Tue Jun  4 01:26:07 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 11765
+[Tue Jun  4 01:26:07 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 38426
+[Tue Jun  4 01:26:07 2024] [WARNING] [../src/controller.c:155]: Client closed the connection.
+[Tue Jun  4 01:26:07 2024] [INFO] [../src/main.c:104]: Client connection closed. - Client IP: 172.56.34.211, Port: 38426
+[Tue Jun  4 01:26:07 2024] [INFO] [../src/main.c:102]: Client connected. - Client IP: 172.56.34.211, Port: 35090
+[Tue Jun  4 01:27:13 2024] [INFO] [../src/main.c:33]: Server starting...
+[Tue Jun  4 01:27:13 2024] [INFO] [../src/main.c:59]: Socket created successfully.
+[Tue Jun  4 01:27:13 2024] [ERROR] [../src/main.c:66]: Bind failed.

@@ -1,49 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive To-Do List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pagetitle}</title>
+    <meta name="description" content="{pagemetadescription}" />
     <style>
-        body { font-family: Arial, sans-serif; }
-        ul { list-style-type: none; padding: 0; }
-        li { padding: 8px; margin: 4px 0; background: #f9f9f9; border: 1px solid #ddd; }
-        li.completed { text-decoration: line-through; color: #888; }
-        .btn { padding: 4px 8px; margin-left: 8px; cursor: pointer; }
-        .btn-complete { background-color: green; color: white; }
-        .btn-delete { background-color: red; color: white; }
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #1a1a1a;
+            font-family: 'Courier New', Courier, monospace;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fps-counter {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 14px;
+            color: #00ffcc;
+        }
+
+        .button-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 33%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px; /* space between buttons */
+        }
+
+        .cyberpunk-button {
+            background: linear-gradient(45deg, #ff00cc, #333399);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 204, 0.5), 0 0 15px rgba(51, 51, 153, 0.5);
+            position: relative; /* Ensure pseudo-elements are positioned correctly */
+        }
+
+        .cyberpunk-button:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 204, 0.7), 0 0 25px rgba(51, 51, 153, 0.7);
+        }
+
+        .cyberpunk-button::before, .cyberpunk-button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s, transform 0.4s;
+        }
+
+        .cyberpunk-button::before {
+            border-radius: 50%;
+        }
+
+        .cyberpunk-button::after {
+            border-radius: 0;
+        }
+
+        .cyberpunk-button:active::before, .cyberpunk-button:active::after {
+            opacity: 1;
+            transform: scale(0);
+        }
+
+        .cyberpunk-button:hover::before {
+            opacity: 0.3;
+        }
+
+        .cyberpunk-button:active {
+            background: linear-gradient(45deg, #333399, #ff00cc);
+            box-shadow: 0 0 20px rgba(51, 51, 153, 0.7), 0 0 20px rgba(255, 0, 204, 0.7);
+        }
+
+        @keyframes clickAnimation {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Interactive To-Do List</h1>
-    <input type="text" id="new-task" placeholder="New task..." />
-    <button id="add-task">Add</button>
-    <ul id="task-list"></ul>
-
+    <canvas id="blinkingCanvas"></canvas>
+    <div class="button-container">
+        <a href="/s/dashboard" class="cyberpunk-button">I Know...</a>
+        <a href="/figure-out" class="cyberpunk-button">What?</a>
+    </div>
+    <div class="fps-counter" id="fpsCounter">FPS: 0</div>
     <script>
-        document.getElementById('add-task').addEventListener('click', function() {
-            var taskText = document.getElementById('new-task').value;
-            if (taskText) {
-                addTask(taskText);
-                document.getElementById('new-task').value = '';
-            }
-        });
+        const canvas = document.getElementById('blinkingCanvas');
+        const ctx = canvas.getContext('2d');
+        const fpsCounter = document.getElementById('fpsCounter');
 
-        function addTask(taskText) {
-            var taskList = document.getElementById('task-list');
-            var li = document.createElement('li');
+        let width, height;
+        let cols, rows;
+        const gridSize = 14;
+        const halfGridSize = gridSize / 2;
+        const blinkDuration = 2400; 
+        let frameCount = 0;
+        let lastTime = performance.now();
 
-            li.innerHTML = taskText + '<button class="btn btn-complete">Complete</button><button class="btn btn-delete">Delete</button>';
-            taskList.appendChild(li);
+        let grid = [];
+        const offscreenCanvas = document.createElement('canvas');
+        const offscreenCtx = offscreenCanvas.getContext('2d');
 
-            li.querySelector('.btn-complete').addEventListener('click', function() {
-                li.classList.toggle('completed');
-            });
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            cols = Math.ceil(width / gridSize);
+            rows = Math.ceil(height / gridSize);
 
-            li.querySelector('.btn-delete').addEventListener('click', function() {
-                taskList.removeChild(li);
-            });
+            offscreenCanvas.width = width;
+            offscreenCanvas.height = height;
+
+            grid = new Array(rows).fill(0).map(() => 
+                new Array(cols).fill(0).map(() => ({
+                    delay: Math.random() * blinkDuration
+                }))
+            );
         }
+
+        function drawGrid() {
+            const currentTime = performance.now();
+            offscreenCtx.clearRect(0, 0, width, height);
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const cell = grid[y][x];
+                    const alpha = Math.abs(Math.sin((currentTime + cell.delay) / blinkDuration * Math.PI));
+                    offscreenCtx.fillStyle = `rgba(204, 206, 166, ${alpha * 0.1})`;
+                    offscreenCtx.fillRect(x * gridSize, y * gridSize, halfGridSize, halfGridSize );
+                }
+            }
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.drawImage(offscreenCanvas, 0, 0);
+        }
+
+        function updateFPS() {
+            const now = performance.now();
+            frameCount++;
+            if (now > lastTime + 1000) {
+                fpsCounter.textContent = `FPS: ${frameCount}`;
+                frameCount = 0;
+                lastTime = now;
+            }
+        }
+
+        function animate() {
+            drawGrid();
+            updateFPS();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        requestAnimationFrame(animate);
+
+        // Add event listeners for mouse move effect
+        const buttons = document.querySelectorAll('.cyberpunk-button');
+        buttons.forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                button.style.setProperty('--mouse-x', `${x}px`);
+                button.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
     </script>
 </body>
 </html>

@@ -12,6 +12,7 @@
 *.out
 *.app
 *.dll
+*.log
 *.dylib
 
 # Debug files
